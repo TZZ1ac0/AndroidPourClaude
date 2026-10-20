@@ -4,6 +4,10 @@ Les changements notables du projet sont documentés ici. Le format suit les prin
 
 ## [Non publié]
 
+### Modifié
+- Dependabot : le plugin Kotlin et le plugin Compose sont mis à jour ensemble, les actions GitHub sont regroupées en une seule pull request, et les versions majeures du plugin Android sont ignorées jusqu'à une migration volontaire.
+- Documentation de la marche à suivre pour les pull requests Dependabot.
+
 ## [0.1.0] - 2026-10-19
 
 ### Ajouté

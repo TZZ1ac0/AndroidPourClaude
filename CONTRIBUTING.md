@@ -28,6 +28,21 @@ Le workflow de publication lit les notes de la release dans la section `## [X.Y.
 scripts/release-notes.sh X.Y.Z
 ```
 
-## Dépendances
+## Dépendances (Dependabot)
 
-Dependabot propose chaque semaine des mises à jour Gradle et GitHub Actions. Les relire comme toute autre pull request.
+Chaque lundi, Dependabot compare les dépendances aux dernières versions et ouvre des pull requests (configuration : `.github/dependabot.yml`). Il ne fusionne jamais rien : la décision reste au mainteneur, et la CI sert de filet de sécurité.
+
+**Regroupements**
+- Le plugin Kotlin et le plugin du compilateur Compose sont mis à jour **ensemble** dans une seule PR, car ils doivent toujours avoir la même version.
+- Toutes les actions GitHub des workflows sont mises à jour dans une seule PR.
+- Les autres dépendances (BOM Compose, wrapper Gradle...) restent des PR individuelles.
+
+**Versions majeures du plugin Android (AGP)**
+Elles sont ignorées volontairement : le passage à l'AGP 9 demande d'adapter les fichiers de build. Les versions 8.x restent proposées. Pour migrer, ouvrir une PR dédiée, puis supprimer les règles `ignore` correspondantes dans `dependabot.yml`.
+
+**Que faire d'une PR Dependabot ?**
+1. CI verte : relire le changement puis fusionner. Si la PR est en retard sur `main`, commenter `@dependabot rebase`.
+2. CI rouge : ne pas fusionner. Ouvrir la PR pour voir l'étape en échec, puis soit corriger dans une PR dédiée, soit l'écarter.
+3. Ne plus vouloir d'une mise à jour : commenter `@dependabot ignore this major version` (ou `minor version`, ou `dependency`). La PR est fermée et Dependabot ne la reproposera pas.
+
+Fusionner une PR Dependabot ne publie pas de release : seule une modification de `gradle.properties` déclenche le workflow de publication.

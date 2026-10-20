@@ -13,7 +13,7 @@ Une application Android « Hello World! » construite avec **Kotlin** et **Jetpa
 | Vérification | Pull request vers `main`, push sur `main` | [`android-ci.yml`](.github/workflows/android-ci.yml) | Validation du wrapper Gradle, lint, tests unitaires, APK de débogage et rapports en artefacts |
 | Titre de PR | Ouverture ou modification d'une PR | [`pr-title.yml`](.github/workflows/pr-title.yml) | Vérifie que le titre suit Conventional Commits |
 | Publication | Push sur `main` modifiant `gradle.properties` | [`release.yml`](.github/workflows/release.yml) | Tag `vX.Y.Z`, GitHub Release avec les notes du changelog et APK installable |
-| Mises à jour | Chaque lundi | [`dependabot.yml`](.github/dependabot.yml) | Pull requests pour les dépendances Gradle et les actions GitHub |
+| Mises à jour | Chaque lundi | [`dependabot.yml`](.github/dependabot.yml) | Pull requests groupées (Kotlin ensemble, actions GitHub ensemble) ; voir [CONTRIBUTING.md](CONTRIBUTING.md#dépendances-dependabot) |
 
 ## Prérequis
 

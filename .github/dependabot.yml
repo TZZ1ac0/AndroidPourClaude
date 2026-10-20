@@ -1,5 +1,6 @@
 version: 2
 updates:
+  # Dépendances Gradle : plugins, bibliothèques, BOM Compose et wrapper.
   - package-ecosystem: gradle
     directory: /
     schedule:
@@ -9,7 +10,25 @@ updates:
     commit-message:
       prefix: chore
       include: scope
+    groups:
+      # Le plugin Kotlin et le plugin du compilateur Compose doivent toujours avoir
+      # exactement la même version : une seule pull request pour les deux, sinon
+      # chacune échouerait seule.
+      kotlin:
+        patterns:
+          - "org.jetbrains.kotlin*"
+    ignore:
+      # Le plugin Android 9 est un changement majeur qui demande d'adapter les fichiers
+      # de build (Kotlin intégré, Gradle 9 minimum...). Cette migration se fait
+      # volontairement, dans une pull request dédiée, et non par une mise à jour
+      # automatique. Les versions 8.x continuent d'être proposées.
+      # Pour réactiver les versions majeures : supprimer ces deux règles.
+      - dependency-name: "com.android.application"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "com.android.tools.build:gradle"
+        update-types: ["version-update:semver-major"]
 
+  # Actions GitHub utilisées par les workflows : une seule pull request par semaine.
   - package-ecosystem: github-actions
     directory: /
     schedule:
@@ -19,3 +38,7 @@ updates:
     commit-message:
       prefix: ci
       include: scope
+    groups:
+      github-actions:
+        patterns:
+          - "*"
